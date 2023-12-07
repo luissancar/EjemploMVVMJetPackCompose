@@ -45,20 +45,25 @@ import com.example.mvvm.R
 fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
     //////////
     val email: String by loginViewModel.email.observeAsState("")
+
+    val password: String by loginViewModel.password.observeAsState("")
+
+
+    val isLoginEnable: Boolean by loginViewModel.isLoginEnable.observeAsState(false)
     /////////
 
-    var password by rememberSaveable {
-        mutableStateOf("")
-    }
-    var isLoginEnable by rememberSaveable {
-        mutableStateOf(false)
-    }
+    /*  var password by rememberSaveable {
+          mutableStateOf("")
+      }
+      var isLoginEnable by rememberSaveable {
+          mutableStateOf(false)
+      }*/
     Column(modifier = modifier) {
         ImageLogo(Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.size(16.dp))
         Email(email) {
             ///////////////
-            loginViewModel.onLoginChanged(it)
+            loginViewModel.onLoginChanged(email = it, password = password)
             ///////////////////
 
 
@@ -68,7 +73,9 @@ fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
         }
         Spacer(modifier = Modifier.size(4.dp))
         Password(password) {
-            password = it
+            loginViewModel.onLoginChanged(email = email, password = it)
+
+            //password = it
 
         }
         Spacer(modifier = Modifier.size(16.dp))
@@ -82,7 +89,11 @@ fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
 
 
     }
-    isLoginEnable = password.length > 0 && isValidEmail(email)
+
+    // loginViewModel.onIsEnabledChanged(password.length > 0 && isValidEmail(email))
+
+
+    //  isLoginEnable = password.length > 0 && isValidEmail(email)
 }
 
 @Composable
@@ -251,7 +262,8 @@ fun ImageLogo(modifier: Modifier) {
     )
 }
 
-
+/*
 fun isValidEmail(email: String): Boolean {
     return PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()
 }
+*/
