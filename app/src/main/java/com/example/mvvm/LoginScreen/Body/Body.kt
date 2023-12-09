@@ -79,7 +79,7 @@ fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
 
         }
         Spacer(modifier = Modifier.size(16.dp))
-        LoginButton(isLoginEnable)
+        LoginButton(isLoginEnable,loginViewModel/* retrofit add*/)
         Spacer(modifier = Modifier.size(16.dp))
         LoginDivider()
         Spacer(modifier = Modifier.size(32.dp))
@@ -144,9 +144,9 @@ fun LoginDivider() {
 }
 
 @Composable
-fun LoginButton(loginEnable: Boolean) {
+fun LoginButton(loginEnable: Boolean, /*Añadido retrofit*/ logiViewModel:LoginViewModel) {
     Button(
-        onClick = { /*TODO*/ }, enabled = loginEnable,
+        onClick = { /*añadido retrofit*/ logiViewModel.onLoginSelected() }, enabled = loginEnable,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 18.dp),
